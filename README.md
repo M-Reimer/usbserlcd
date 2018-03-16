@@ -10,6 +10,6 @@ or: The graphlcd VDR plugin: https://projects.vdr-developer.org/git/vdr-plugin-g
 
 For detailed build instructions, please have a look at the [Wiki](https://github.com/M-Reimer/usbserlcd/wiki)
 
-[[https://raw.githubusercontent.com/wiki/M-Reimer/usbserlcd/images/lcd-wiring.jpg]]
+![](https://raw.githubusercontent.com/wiki/M-Reimer/usbserlcd/images/lcd-wiring.jpg)
 
-[[https://raw.githubusercontent.com/wiki/M-Reimer/usbserlcd/images/lcd-front.jpg]]
+![](https://raw.githubusercontent.com/wiki/M-Reimer/usbserlcd/images/lcd-front.jpg)
