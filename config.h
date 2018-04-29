@@ -15,8 +15,13 @@ const int PIN_D7 = A1;
 // Status bits
 const int PIN_CE = A2;
 const int PIN_WR = A3;
-const int PIN_CD = A4;
+#if defined(__AVR_ATmega32U4__)
+const int PIN_CD = 14; // Use these pins for the Arduino Pro Micro (Mega32u4) board
+const int PIN_RD = 15;
+#else
+const int PIN_CD = A4; // Use these for the Arduino Nano with FT232RL serial converter
 const int PIN_RD = A5;
+#endif
 
 // Output pin (PWM) to control backlight brightness
 // You need a PN2222A transistor (or similar) with an 1K base resistor to drive the LED backlight!

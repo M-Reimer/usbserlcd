@@ -21,6 +21,9 @@
 #include "config.h"
 #include "digitalWriteFast.h"
 #include "splashscreen.h"
+#if defined(__AVR_ATmega32U4__)
+#include "USBStatus.h"
+#endif
 
 // T6963 commands
 const unsigned char kSetAddressPointer = 0x24;
@@ -187,10 +190,17 @@ void ClearScreen() {
 // If LCD turns on, start brightness and splashscreen are set
 // If LCD turns off, backlight is turned off and screen is cleared
 void CheckSleep() {
-  static int lastSleepValue = HIGH;
-  const int SleepValue = digitalRead(PIN_SLEEP);
-  if (SleepValue != lastSleepValue) {
-    if (SleepValue == LOW) {
+#if defined(__AVR_ATmega32U4__)
+  // Ask the USBStatus library about the USB host status
+  const bool shutdown = USBStatus.isShutDown();
+#else
+  // Read the FT232RL PWREN pin
+  const bool shutdown = !digitalRead(PIN_SLEEP);
+#endif
+  // Initialize remembered value with opposite of current status to force LCD init.
+  static bool last_shutdown = !shutdown;
+  if (shutdown != last_shutdown) {
+    if (!shutdown) {
       analogWrite(PIN_BRIGHTNESS, 255);
       DisplaySplashscreen();
     }
@@ -198,7 +208,7 @@ void CheckSleep() {
       analogWrite(PIN_BRIGHTNESS, 0);
       ClearScreen();
     }
-    lastSleepValue = SleepValue;
+    last_shutdown = shutdown;
   }
 }
 
